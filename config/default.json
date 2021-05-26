@@ -1,0 +1,58 @@
+{
+    "postgres": {
+        "connection_string": "postgres://postgres:postgres@127.0.0.1:5432/skgbot-dev",
+        "connection_string_reset": "postgres://postgres:postgres@127.0.0.1:5432/postgres",
+        "pool_min": 2,
+        "pool_max": 10,
+        "migrations": { "directory": "./migrations/migrations/" },
+        "seed_directory": "./migrations/seeds"
+    },
+    "webserver": {
+        "port": 8000,
+        "backend_base_url": "http://localhost:8000",
+        "enforce_ssl": false,
+        "cookie_secure": false,
+        "cors": { "allowed_origins": [] }
+    },
+    "email": {
+        "smtp_host": "gx2s-kc87.accessdomain.com",
+        "smtp_port": 465,
+        "smtp_secure": true,
+        "auth_user": "skgbot@skgtech.io",
+        "auth_password": "DO NOT SET - USE ENV VAR: SKGBOT_EMAIL_AUTH_PASSWORD"
+    },
+    "onboarding": {
+        "mail_from": "\"SKGTech Bot 🤖\" <hello@skgtech.io>",
+        "verification_url": "https://verify.skgtech.io/verify/",
+        "verification_expires_days": 10,
+        "max_onboarding_days": 3,
+        "invite_permalink": "https://discord.gg/BtyMYpDacK"
+    },
+    "options": {
+        "timezone": "DO NOT SET - USE ENV VAR: SKGBOT_OPTIONS_TIMEZONE"
+    },
+    "discord": {
+        "server_name": "SKGTech",
+        "moderator_role_id": "DO NOT SET - USE ENV VAR: DISCORD_MODERATOR_ROLE_ID",
+        "guild_id": "DO NOT SET - USE ENV VAR: DISCORD_GUILD_ID",
+        "token": "DO NOT SET - USE ENV VAR: DISCORD_BOT_TOKEN",
+        "commando": {
+            "owner_uid": "DO NOT SET - USE ENV VAR: DISCORD_COMMANDO_UID"
+        },
+        "admin_channel_id": "DO NOT SET - USE ENV VAR: DISCORD_ADMIN_CHANNEL_ID",
+        "member_role_id": "DO NOT SET - USE ENV VAR: DISCORD_MEMBER_ROLE_ID",
+        "main_channel_id": "DO NOT SET - USE ENV VAR: DISCORD_MAIN_CHANNEL_ID",
+        "roles_all_available": [
+            "Member",
+            "Space"
+        ],
+        "roles_all_available_lowercase": [
+            "member",
+            "space"
+        ],
+
+        "roles_for_new_member": [
+            "Member"
+        ]
+    }
+}

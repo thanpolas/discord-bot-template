@@ -1,0 +1,22 @@
+{
+    "postgres": {
+        "connection_string": "DATABASE_URL"
+    },
+    "email": {
+        "auth_password": "SKGBOT_EMAIL_AUTH_PASSWORD"
+    },
+    "options": {
+        "timezone": "SKGBOT_OPTIONS_TIMEZONE"
+    },
+    "discord": {
+        "guild_id": "DISCORD_GUILD_ID",
+        "moderator_role_id": "DISCORD_MODERATOR_ROLE_ID",
+        "token": "DISCORD_BOT_TOKEN",
+        "admin_channel_id": "DISCORD_ADMIN_CHANNEL_ID",
+        "main_channel_id": "DISCORD_MAIN_CHANNEL_ID",
+        "member_role_id": "DISCORD_MEMBER_ROLE_ID",
+        "commando": {
+            "owner_uid": "DISCORD_COMMANDO_UID"
+        }
+    }
+}

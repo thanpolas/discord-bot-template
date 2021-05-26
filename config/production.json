@@ -1,0 +1,11 @@
+{
+    "webserver": {
+        "backend_base_url": "http://verify.skgtech.io"
+    },
+    "onboarding": {
+        "verification_url": "https://verify.skgtech.io/verify/"
+    },
+    "postgres": {
+        "connection_string": "USE ENV VAR"
+    }
+}

@@ -1,0 +1,78 @@
+{
+    "name": "@thanpolas/discord-bot-template",
+    "version": "1.0.0",
+    "main": "./app/",
+    "description": "Discord bot for calling out predictions",
+    "homepage": "https://github.com/thanpolas/discord-bot-template",
+    "bugs": "https://github.com/thanpolas/discord-bot-template/issues",
+    "author": {
+        "name": "Thanos Polychronakis",
+        "email": "thanpolas@gmail.com"
+    },
+    "contributors": [],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/thanpolas/discord-bot-template"
+    },
+    "license": "ISC",
+    "engines": {
+        "node": "14.15.5"
+    },
+    "scripts": {
+        "start": "node .",
+        "eslint": "eslint app test",
+        "db:reset:local": "node scripts/db-local.script.js",
+        "knex:create_migration": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:make",
+        "test:app": "TZ=utc jest --runInBand --testPathPattern=/test/",
+        "knex:migrate": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:latest"
+    },
+    "jest": {
+        "coverageReporters": [
+            "html",
+            "text-summary"
+        ],
+        "roots": [
+            "./test/app",
+            "./test/unit"
+        ],
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": [
+            "jest-extended"
+        ],
+        "globalSetup": "./test/lib/global-setup.test.js",
+        "testTimeout": 10000
+    },
+    "dependencies": {
+        "bluebird": "3.7.2",
+        "config": "3.3.6",
+        "connection-string": "4.3.4",
+        "date-fns": "2.21.3",
+        "discord.js": "12.5.3",
+        "dotenv": "10.0.0",
+        "knex": "0.95.6",
+        "lodash": "4.17.21",
+        "logality": "3.0.3",
+        "node-cron": "3.0.0",
+        "pg": "8.6.0",
+        "uuid": "8.3.2",
+        "validator": "13.6.0"
+    },
+    "devDependencies": {
+        "@types/jest": "26.0.23",
+        "eslint": "7.27.0",
+        "eslint-config-airbnb-base": "14.2.1",
+        "eslint-config-prettier": "8.3.0",
+        "eslint-plugin-import": "2.23.3",
+        "eslint-plugin-jest": "24.3.6",
+        "eslint-plugin-jsdoc": "35.0.0",
+        "eslint-plugin-prettier": "3.4.0",
+        "eslint-plugin-security": "1.4.0",
+        "expect": "27.0.1",
+        "faker": "5.5.3",
+        "jest": "27.0.1",
+        "jest-extended": "0.11.5",
+        "jest-junit": "12.1.0",
+        "prettier": "2.3.0",
+        "supertest": "6.1.3"
+    }
+}
