@@ -52,27 +52,20 @@ discordService.init = async function (bootOpts) {
     return;
   }
   return new Promise((resolve, reject) => {
-    log.notice('Starting Discord Service...', {
-      custom: {
-        owner_uid: config.discord.owner_uid,
-      },
-    });
+    log.notice('Starting Discord Service...');
 
     const client = (discordService._client = new Discord.Client());
 
     client.on('ready', () => {
-      log.notice(`Discord-Commando Connected as: ${client.user.tag}`);
+      log.notice(`Discord Connected as: ${client.user.tag}`);
 
       resolve();
     });
 
     client.on('error', async (error) => {
-      await log.warn(
-        `Discord-Commando Client Error. Connected at: ${client.readyAt}`,
-        {
-          error,
-        },
-      );
+      await log.warn(`Discord Client Error. Connected at: ${client.readyAt}`, {
+        error,
+      });
 
       // When no connection has been established, the service is still in
       // initialization mode
