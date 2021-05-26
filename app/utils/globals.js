@@ -2,7 +2,6 @@
  * @fileoverview Global values that need runtime calculation.
  *
  */
-const config = require('config');
 const os = require('os');
 
 const globals = (module.exports = {});
@@ -72,15 +71,6 @@ if ([globals.Environments.HEROKU_PROD].indexOf(globals.env) >= 0) {
 
 /** @type {boolean} Determines if we are on heroku environment. */
 globals.isHeroku = [globals.Environments.HEROKU_PROD].indexOf(globals.env) >= 0;
-
-//
-// Discover proper port
-//
-if (process.env.PORT) {
-  globals.port = process.env.PORT;
-} else {
-  globals.port = config.webserver.port;
-}
 
 /**
  * Cache the Current Working Directory.
