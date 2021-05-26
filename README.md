@@ -1,8 +1,24 @@
-# SKGTech Discord Bot
+# Discord Bot Template
 
-> Enables onboarding of new users, moderation and provides useful commands to users.
+> Describe what your bot does
 
 # How To Install
+
+## Create The Bot
+
+1. Go to the developer portal: https://discord.com/developers/applications
+    1. Create Application.
+    1. Go to "Bot" Menu and add expected permissions.
+    1. Go to "OAuth2" menu and select the "bot" scope.
+    1. Copy the OAuth2 URL and paste it on the browser.
+    1. Help on creating a bot: https://discordpy.readthedocs.io/en/latest/discord.html
+
+## Update Env variables with the bot tokens
+
+1. Copy `.env-template` to `.env` and fill in the required values.
+1. Update env variables on the project.
+
+## Prepare Docker
 
 We use Docker and docker-compose, so you will need to install
 the [Docker Desktop][docker-desktop] package
@@ -20,18 +36,10 @@ docker-compose up
 
 All targets require the following environment variables:
 
--   `POSTGRES_URL` A url with credentials pointing to the data store.
+-   `DATABASE_URL` A url with credentials pointing to the data store.
 -   `DISCORD_GUILD_ID` The guild id of your server.
 -   `DISCORD_BOT_TOKEN` The Discord token of the bot.
--   `DISCORD_COMMANDO_UID` Your user id, so you can invoke discord commands.
--   `DISCORD_ADMIN_CHANNEL_ID` Channel ID to relay messages to.
--   `DISCORD_MODERATOR_ROLE_ID` The role id of the moderator role.
--   `DISCORD_MEMBER_ROLE_ID` The id of the main ("member") role.
--   `DISCORD_MAIN_CHANNEL_ID` The id of the main chatter channel, for welcome
-        messages.
--   `SKGBOT_EMAIL_AUTH_PASSWORD` The SMTP password for sending emails.
--   `SKGBOT_OPTIONS_TIMEZONE` Set the timezone on which the task manager (cron)
-    will run on. Use values from [Moment Timezone](https://momentjs.com/timezone).
+-   `BOT_OPTIONS_TIMEZONE` Timezone to be used. Values from [moment TZ][tz].
 
 This project also supports a [`.env` file][dotenv] which is on `.gitignore`
 for your convenience when developing on your local.
@@ -86,8 +94,10 @@ TBD
 
 ## License
 
-Copyright © SKGTech and Authors, Licensed under ISC.
+Copyright © [Thanos Polychronakis][thanpolas] and Authors, Licensed under ISC.
 
 [docker-compose]: https://docs.docker.com/compose/reference/overview/
 [docker-desktop]: https://www.docker.com/products/docker-desktop
 [dotenv]: https://github.com/motdotla/dotenv#readme
+[thanpolas]: https://github.com/thanpolas
+[tz]: https://momentjs.com/timezone
