@@ -9,7 +9,10 @@ const {
   getGuildChannel,
   getGuildMemberUid,
 } = require('./logic/guild.ent');
-const { loggerToAdmin } = require('./logic/relay-to-admin.ent');
+const {
+  loggerToAdmin,
+  init: initAdminRelay,
+} = require('./logic/relay-to-admin.ent');
 const { guildJoined } = require('./logic/guild-join.ent');
 const {
   getMainChannel,
@@ -34,10 +37,11 @@ entity.getTokenLink = getTokenLink;
 entity.removeCommand = removeCommand;
 
 /**
- * Execute any available one off discord tasks...
+ * Execute any available one-off discord tasks...
  *
  * @return {Promise<void>} A Promise.
  */
 entity.init = async () => {
+  await initAdminRelay();
   getClient().on('guildCreate', guildJoined);
 };

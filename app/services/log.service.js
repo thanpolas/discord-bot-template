@@ -17,6 +17,7 @@ const Logality = require('logality');
 // Serializers
 const relaySerializer = require('./log-serializers/relay.serializer');
 const emojiSerializer = require('./log-serializers/emoji.serializer');
+const guildSerializer = require('./log-serializers/guild.serializer');
 
 const logger = (module.exports = {});
 
@@ -40,6 +41,7 @@ logger.init = function (bootOpts = {}) {
   const serializers = {
     relay: relaySerializer(),
     emoji: emojiSerializer(),
+    guild: guildSerializer(),
   };
 
   logger.logality = new Logality({
@@ -64,6 +66,12 @@ logger.init = function (bootOpts = {}) {
 logger._addMiddleware = () => {
   const { loggerToAdmin } = require('../entities/discord');
 
-  // Auditlog related middleware
+  // Relay flagged messages to admin channel
   logger.logality.use(loggerToAdmin);
+
+  // Delete helper flags and properties
+  logger.logality.use((logContext) => {
+    delete logContext.emoji;
+    delete logContext.relay;
+  });
 };

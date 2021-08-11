@@ -3,15 +3,25 @@
  *   messages to the admin channel.
  */
 
-const BPromise = require('bluebird');
 const config = require('config');
 
 const { isConnected, getClient } = require('../../../services/discord.service');
 const globals = require('../../../utils/globals');
-const { splitString } = require('../../../utils/helpers');
 const { getGuildChannel } = require('./guild.ent');
 
 const entity = (module.exports = {});
+
+/** @type {DiscordChannel?} Admin channel to send messages to */
+entity._channel = null;
+
+/**
+ * Initialize the module by pre-fetching the admin channel to send logs to.
+ *
+ * @return {Promise<void>} An empty promise.
+ */
+entity.init = async () => {
+  entity._channel = await getGuildChannel(config.discord.bot_log_channel_id);
+};
 
 /**
  * Middleware for logality, will relay select log messages to the admin channel.
@@ -20,45 +30,41 @@ const entity = (module.exports = {});
  * @return {Promise<void>} A Promise.
  */
 entity.loggerToAdmin = async (logContext) => {
-  // Don't log when not connected to discord
-  if (!isConnected()) {
-    return;
-  }
-
-  // don't relay when testing
-  if (globals.isTest) {
-    return;
-  }
-
-  // only deal with logs to relay or errors.
   let message;
-  if (logContext.relay || logContext.severity < 5) {
-    message = await entity._formatMessage(logContext);
-  } else {
-    return;
-  }
-
-  if (!message) {
-    return;
-  }
-
-  const channel = await getGuildChannel(config.discord.bot_log_channel_id);
-
-  // discord allows up to 2000 chars
   try {
-    const splitMessage = splitString(message);
-    await BPromise.mapSeries(splitMessage, (msg) => {
-      return channel.send(msg);
-    });
+    // Don't log when not connected to discord
+    if (!isConnected()) {
+      return;
+    }
+
+    // don't relay when testing
+    if (globals.isTest) {
+      return;
+    }
+
+    // only deal with logs to relay or errors.
+    if (logContext.relay || logContext.severity < 5) {
+      message = entity._formatMessage(logContext);
+    } else {
+      return;
+    }
+
+    if (!message) {
+      return;
+    }
+
+    if (typeof message !== 'string') {
+      if (Array.isArray(message)) {
+        message = { embeds: message };
+      } else {
+        message = { embeds: [message] };
+      }
+    }
+    await entity._channel.send(message);
   } catch (ex) {
     // eslint-disable-next-line no-console
-    console.error('Error relaying message to admin channel', {
-      logContext,
-      error: ex,
-    });
+    console.error('ERROR loggerToAdmin() ::', ex);
   }
-
-  delete logContext.emoji;
 };
 
 /**
