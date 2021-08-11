@@ -12,6 +12,7 @@
     "discord": {
         "server_name": "server-name",
         "guild_id": "DO NOT SET - USE ENV VAR: DISCORD_GUILD_ID",
+        "bot_log_channel_id": "DO NOT SET - USE ENV VAR: DISCORD_BOT_LOG_CHANNEL_ID",
         "token": "DO NOT SET - USE ENV VAR: DISCORD_BOT_TOKEN"
     }
 }
