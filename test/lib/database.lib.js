@@ -8,7 +8,7 @@ const config = require('config');
 const testDb = (module.exports = {});
 
 /** @const {Array.<string>} ALLOW_NUKE_DB Which database names can be nuked */
-const ALLOW_NUKE_DB = ['dbname'];
+const ALLOW_NUKE_DB = ['EDIT_DB_NAME_IN_test/lib/database.lib.js'];
 
 /**
  * Drop and create test database[s].
@@ -16,7 +16,9 @@ const ALLOW_NUKE_DB = ['dbname'];
  * @param {string=} targetDb The target database to nuke and recreate.
  * @return {Promise} A Promise.
  */
-testDb.recreateDatabase = async (targetDb = 'dbname') => {
+testDb.recreateDatabase = async (
+  targetDb = 'EDIT_DB_NAME_IN_test/lib/database.lib.js',
+) => {
   try {
     const startTime = Date.now();
 
@@ -31,7 +33,8 @@ testDb.recreateDatabase = async (targetDb = 'dbname') => {
         `Total time: ${timeDiff}ms\n\n`,
     );
   } catch (ex) {
-    console.error('test/database.lib.js failed:', ex);
+    console.error('test/lib/database.lib.js failed:', ex);
+    process.exit(1);
   }
 };
 
@@ -76,7 +79,7 @@ testDb.runMigrationsAndSeed = async (dbConfig, runSeeds) => {
  */
 testDb._cleanupDb = async (targetDb) => {
   if (!ALLOW_NUKE_DB.includes(targetDb)) {
-    throw new Error('Database name not in allowed list');
+    throw new Error(`Database name not in allowed list. Name: ${targetDb}`);
   }
 
   // Using a generic connection string to the "postgres" db so
