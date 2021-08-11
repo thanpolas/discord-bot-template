@@ -235,3 +235,57 @@ helpers.flatFilter = (ar) => {
 helpers.divergenceHr = (divergence) => {
   return `${(divergence * 100).toFixed(2)}%`;
 };
+
+/**
+ * Converts an array of strings into numbers.
+ *
+ * @param {Array<string>} arr The array.
+ * @return {Array<number>}
+ */
+helpers.arrToNumbers = (arr) => arr.map((item) => Number(item));
+
+/**
+ * Calculates the mean value.
+ *
+ * @param {Array<number>} arr The array to get the mean of.
+ * @return {number} The mean value.
+ */
+helpers.meanOfArr = (arr) => {
+  const total = arr.reduce((aggregate, val) => {
+    return aggregate + val;
+  }, 0);
+
+  return total / arr.length;
+};
+
+/**
+ * Calculates the median of an array.
+ *
+ * @param {Array<number>} arr The numbers to get the median from.
+ * @return {number}
+ */
+helpers.medianOfArr = (arr) => {
+  const arrSorted = arr.sort((a, b) => {
+    return a - b;
+  });
+
+  const { length } = arrSorted;
+
+  if (length % 2 === 1) {
+    // If length is odd
+    return arrSorted[length / 2 - 0.5];
+  }
+
+  return (arrSorted[length / 2] + arrSorted[length / 2 - 1]) / 2;
+};
+
+/**
+ * Get the divergence between two numbered expressed in percentage as a float.
+ *
+ * @param {number} a Numerator.
+ * @param {number} b Denominator
+ * @return {number} 0.01 = 1%.
+ */
+helpers.getDivergence = (a, b) => {
+  return a / b - 1;
+};
