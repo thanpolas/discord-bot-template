@@ -4,6 +4,8 @@
 
 const config = require('config');
 const { getClient } = require('../../../services/discord.service');
+const { getGuildChannel } = require('./guild.ent');
+const { asyncMapCap } = require('../../../utils/helpers');
 
 const entity = (module.exports = {});
 
@@ -29,4 +31,19 @@ entity.getMainChannel = () => {
   );
 
   return entity._mainChannel;
+};
+
+/**
+ * Send ember messages to all channels.
+ *
+ * @param {DiscordMessageEmber} embedMessage The embed message to populate.
+ * @param {Array.<string>} channelIds The channel ids to populate to.
+ * @return {Promise<void>}
+ * @private
+ */
+entity.sendMessageToChannels = async (embedMessage, channelIds) => {
+  await asyncMapCap(channelIds, async (channelId) => {
+    const guildChannel = await getGuildChannel(channelId);
+    await guildChannel.send(embedMessage);
+  });
 };
