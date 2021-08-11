@@ -4,15 +4,14 @@
         "connection_string_reset": "postgres://postgres:postgres@127.0.0.1:5432/postgres",
         "pool_min": 2,
         "pool_max": 10,
-        "migrations": { "directory": "./migrations/migrations/" },
+        "migrations": {
+            "directory": "./migrations/migrations/"
+        },
         "seed_directory": "./migrations/seeds"
     },
     "discord": {
         "server_name": "server-name",
         "guild_id": "DO NOT SET - USE ENV VAR: DISCORD_GUILD_ID",
         "token": "DO NOT SET - USE ENV VAR: DISCORD_BOT_TOKEN"
-    },
-    "options": {
-        "timezone": "DO NOT SET - USE ENV VAR: BOT_OPTIONS_TIMEZONE"
     }
 }

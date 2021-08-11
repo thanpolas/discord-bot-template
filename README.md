@@ -2,6 +2,16 @@
 
 > Describe what your bot does
 
+# Getting Started
+
+You need to edit the following files:
+
+-   [] package.json
+-   [] scripts/db-local.script.js
+-   [] test/lib/db-local.script.js
+-   [] .circleci/config.yml
+-   [] config/\*\* (all configurations)
+
 # How To Install
 
 ## Clone and Build
