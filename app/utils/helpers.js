@@ -2,6 +2,7 @@
  * @fileoverview Generic helpers
  */
 
+const _ = require('lodash');
 const Bluebird = require('bluebird');
 const format = require('date-fns/format');
 
