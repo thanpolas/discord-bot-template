@@ -6,11 +6,12 @@
 
 You need to edit the following files:
 
--   [] package.json
--   [] scripts/db-local.script.js
--   [] test/lib/db-local.script.js
--   [] .circleci/config.yml
--   [] config/\*\* (all configurations)
+-   [] `.env-template` and copy as `.env`
+-   [] `package.json`
+-   [] `scripts/db-local.script.js`
+-   [] `test/lib/database.lib.js`
+-   [] `.circleci/config.yml`
+-   [] `config/**` (all configurations).
 
 # How To Install
 
