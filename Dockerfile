@@ -1,5 +1,5 @@
 # Set the latest node version
-ARG node_version=14.15.5
+ARG node_version=16.6.1
 ARG node_image=node:${node_version}-alpine
 
 #
