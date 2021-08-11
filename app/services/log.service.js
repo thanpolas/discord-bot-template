@@ -15,9 +15,8 @@ const Logality = require('logality');
  */
 
 // Serializers
-// const localMemberSerializer = require('./log-serializers/member.serializer');
-// const relaySerializer = require('./log-serializers/relay.serializer');
-// const emojiSerializer = require('./log-serializers/emoji.serializer');
+const relaySerializer = require('./log-serializers/relay.serializer');
+const emojiSerializer = require('./log-serializers/emoji.serializer');
 
 const logger = (module.exports = {});
 
@@ -36,12 +35,11 @@ logger.init = function (bootOpts = {}) {
     return;
   }
 
-  const appName = bootOpts.appName || 'skgbot';
+  const { appName } = bootOpts;
 
   const serializers = {
-    // localMember: localMemberSerializer(),
-    // relay: relaySerializer(),
-    // emoji: emojiSerializer(),
+    relay: relaySerializer(),
+    emoji: emojiSerializer(),
   };
 
   logger.logality = new Logality({
