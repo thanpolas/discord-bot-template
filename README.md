@@ -2,7 +2,28 @@
 
 > Describe what your bot does
 
+# Getting Started
+
+You need to edit the following files:
+
+-   [] `.env-template` and copy as `.env`
+-   [] `package.json`
+-   [] `scripts/db-local.script.js`
+-   [] `test/lib/database.lib.js`
+-   [] `.circleci/config.yml`
+-   [] `config/**` (all configurations).
+
 # How To Install
+
+## Clone and Build
+
+```
+git clone git@github.com:thanpolas/discord-bot-template.git
+
+cd discord-bot-template
+
+npm i
+```
 
 ## Create The Bot
 
@@ -20,26 +41,23 @@
 
 ## Prepare Docker
 
-We use Docker and docker-compose, so you will need to install
-the [Docker Desktop][docker-desktop] package
+If you need database support, use the Docker and docker-compose, configurations
+so you will need to install the [Docker Desktop][docker-desktop] package
 on your local machine.
 
 Once that is done, enter the working directory and type:
 
 ```
-docker-compose up
+docker-compose up -d
 ```
 
 [More on all `docker-compose` available commands][docker-compose].
 
 ## Needed Environment Variables
 
-All targets require the following environment variables:
+All targets require the following environment variables (add new as needed):
 
--   `DATABASE_URL` A url with credentials pointing to the data store.
--   `DISCORD_GUILD_ID` The guild id of your server.
 -   `DISCORD_BOT_TOKEN` The Discord token of the bot.
--   `BOT_OPTIONS_TIMEZONE` Timezone to be used. Values from [moment TZ][tz].
 
 This project also supports a [`.env` file][dotenv] which is on `.gitignore`
 for your convenience when developing on your local.

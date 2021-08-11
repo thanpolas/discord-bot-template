@@ -12,8 +12,8 @@ const messageRouter = (module.exports = {});
  * Initialize Discord event listeners for performing message router.
  *
  */
-messageRouter.init = () => {
-  log.info('Initializing message router entity...');
+messageRouter.init = async () => {
+  await log.info('Initializing message router entity...');
   const client = getClient();
 
   client.on('message', messageRouter._onMessage);

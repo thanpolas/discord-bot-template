@@ -13,10 +13,9 @@ const seed = (module.exports = {});
  * @return {Promise}
  */
 seed.seed = async (knex) => {
-  const records = [{}, {}];
-  const promises = records.map((record) => {
-    return knex.insert(record).into('tablename');
-  });
-
-  await Promise.all(promises);
+  // const records = [{}, {}];
+  // const promises = records.map((record) => {
+  //   return knex.insert(record).into('tablename');
+  // });
+  // await Promise.all(promises);
 };

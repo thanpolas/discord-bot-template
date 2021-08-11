@@ -29,11 +29,6 @@ const APPLICATION_NAME = 'ProjectName';
 //
 
 /**
- * @fileoverview Master bootsrap module.
- *
- */
-
-/**
  * The master boot.
  *
  */
@@ -43,6 +38,7 @@ const app = (module.exports = {});
 globals.isStandAlone = require.main === module;
 
 let initialized = false;
+let exiting = false;
 let appServices;
 
 /**
@@ -111,6 +107,11 @@ app.init = async (optOpts) => {
  * @return {Promise<void>}
  */
 app.handleNodeExit = async (options, error) => {
+  if (exiting) {
+    return;
+  }
+  exiting = true;
+
   const { exit = true, exitCode = 0, type } = options;
 
   const log = logService.get();

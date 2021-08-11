@@ -86,6 +86,13 @@
  */
 
 /**
+ * Discord.js MessageEmber instance.
+ *
+ * @typedef {(Object)} DiscordMessageEmbed
+ * @see https://discord.js.org/#/docs/main/stable/class/MessageEmbed
+ */
+
+/**
  * Discord.js member id.
  *
  * @typedef {(string)} DiscordMemberId

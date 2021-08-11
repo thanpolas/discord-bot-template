@@ -1,8 +1,8 @@
 {
     "name": "@thanpolas/discord-bot-template",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "main": "./app/",
-    "description": "Discord bot for calling out predictions",
+    "description": "Discord bot template --- EDIT ME ---",
     "homepage": "https://github.com/thanpolas/discord-bot-template",
     "bugs": "https://github.com/thanpolas/discord-bot-template/issues",
     "author": {
@@ -16,7 +16,7 @@
     },
     "license": "ISC",
     "engines": {
-        "node": "14.15.5"
+        "node": "16.6.1"
     },
     "scripts": {
         "start": "node .",
@@ -24,7 +24,8 @@
         "db:reset:local": "node scripts/db-local.script.js",
         "knex:create_migration": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:make",
         "test:app": "TZ=utc jest --runInBand --testPathPattern=/test/",
-        "knex:migrate": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:latest"
+        "knex:migrate": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:latest",
+        "test": "npm run eslint && npm run test:app"
     },
     "jest": {
         "coverageReporters": [
@@ -49,6 +50,7 @@
         "date-fns": "2.21.3",
         "discord.js": "12.5.3",
         "dotenv": "10.0.0",
+        "invariant": "^2.2.4",
         "knex": "0.95.6",
         "lodash": "4.17.21",
         "logality": "3.0.3",

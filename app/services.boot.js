@@ -39,7 +39,7 @@ appServices.boot = async (bootOpts) => {
     await cronService.init();
   }
 
-  await entities.init();
+  await entities.init(bootOpts);
 
   await log.notice('Service Boot Finished', {
     relay: true,

@@ -2,31 +2,46 @@
  * @fileoverview Various discord helpers, queries and methods.
  */
 
+const { getClient } = require('../../services/discord.service');
+
 const {
   getGuild,
-  getGuildMember,
-  getGuildMemberLocal,
-  getGuildMemberUid,
-  getOnboardingMembers,
   getGuildChannel,
-  getGuildMembers,
+  getGuildMemberUid,
 } = require('./logic/guild.ent');
-const { getMainChannel } = require('./logic/channels.ent');
+const {
+  loggerToAdmin,
+  init: initAdminRelay,
+} = require('./logic/relay-to-admin.ent');
+const { guildJoined } = require('./logic/guild-join.ent');
+const {
+  getMainChannel,
+  sendMessageToChannels,
+} = require('./logic/channels.ent');
+const {
+  getAddressLink,
+  getTokenLink,
+  removeCommand,
+} = require('./logic/discord-helpers.ent');
 
 const entity = (module.exports = {});
 
 entity.getMainChannel = getMainChannel;
 entity.getGuild = getGuild;
-entity.getGuildMember = getGuildMember;
-entity.getGuildMemberLocal = getGuildMemberLocal;
-entity.getGuildMemberUid = getGuildMemberUid;
 entity.getGuildChannel = getGuildChannel;
-entity.getOnboardingMembers = getOnboardingMembers;
-entity.getGuildMembers = getGuildMembers;
+entity.getGuildMemberUid = getGuildMemberUid;
+entity.loggerToAdmin = loggerToAdmin;
+entity.sendMessageToChannels = sendMessageToChannels;
+entity.getAddressLink = getAddressLink;
+entity.getTokenLink = getTokenLink;
+entity.removeCommand = removeCommand;
 
 /**
- * Execute any available one off discord tasks...
+ * Execute any available one-off discord tasks...
  *
  * @return {Promise<void>} A Promise.
  */
-entity.init = async () => {};
+entity.init = async () => {
+  await initAdminRelay();
+  getClient().on('guildCreate', guildJoined);
+};
