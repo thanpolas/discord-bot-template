@@ -29,11 +29,6 @@ const APPLICATION_NAME = 'ProjectName';
 //
 
 /**
- * @fileoverview Master bootsrap module.
- *
- */
-
-/**
  * The master boot.
  *
  */
