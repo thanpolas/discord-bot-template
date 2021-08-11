@@ -4,6 +4,7 @@
  */
 
 const config = require('config');
+const invariant = require('invariant');
 
 const { isConnected, getClient } = require('../../../services/discord.service');
 const globals = require('../../../utils/globals');
@@ -20,6 +21,14 @@ entity._channel = null;
  * @return {Promise<void>} An empty promise.
  */
 entity.init = async () => {
+  invariant(
+    config.discord.bot_log_channel_id,
+    'Config "discord.bot_log_channel_id" not set',
+  );
+
+  if (entity._channel) {
+    return;
+  }
   entity._channel = await getGuildChannel(config.discord.bot_log_channel_id);
 };
 
@@ -42,9 +51,19 @@ entity.loggerToAdmin = async (logContext) => {
       return;
     }
 
+    if (!entity._channel) {
+      try {
+        await entity.init();
+      } catch (ex) {
+        // eslint-disable-next-line no-console
+        console.error('Error while pre-initializing relay-to-admin', ex);
+        return;
+      }
+    }
+
     // only deal with logs to relay or errors.
     if (logContext.relay || logContext.severity < 5) {
-      message = entity._formatMessage(logContext);
+      message = await entity._formatMessage(logContext);
     } else {
       return;
     }
@@ -63,7 +82,7 @@ entity.loggerToAdmin = async (logContext) => {
     await entity._channel.send(message);
   } catch (ex) {
     // eslint-disable-next-line no-console
-    console.error('ERROR loggerToAdmin() ::', ex);
+    console.error('ERROR loggerToAdmin() ::', ex, message);
   }
 };
 
