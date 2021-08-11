@@ -4,7 +4,7 @@
  */
 
 const config = require('config');
-const Discord = require('discord.js');
+const { Client } = require('discord.js');
 
 const log = require('./log.service').get();
 
@@ -38,7 +38,7 @@ discordService.getClient = () => {
  * @return {boolean}
  */
 discordService.isConnected = () => {
-  return !!discordService._client;
+  return !!discordService?._client;
 };
 
 /**
@@ -54,7 +54,7 @@ discordService.init = async function (bootOpts) {
   return new Promise((resolve, reject) => {
     log.notice('Starting Discord Service...');
 
-    const client = (discordService._client = new Discord.Client());
+    const client = (discordService._client = new Client({ intents: [] }));
 
     client.on('ready', () => {
       log.notice(`Discord Connected as: ${client.user.tag}`);
