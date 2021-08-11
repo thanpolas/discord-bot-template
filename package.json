@@ -24,7 +24,8 @@
         "db:reset:local": "node scripts/db-local.script.js",
         "knex:create_migration": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:make",
         "test:app": "TZ=utc jest --runInBand --testPathPattern=/test/",
-        "knex:migrate": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:latest"
+        "knex:migrate": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:latest",
+        "test": "npm run eslint && npm run test:app"
     },
     "jest": {
         "coverageReporters": [
