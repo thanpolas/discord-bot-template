@@ -11,6 +11,6 @@ const bootstrap = (module.exports = {});
  * Bootstrap for Entities.
  */
 bootstrap.init = async () => {
-  messageRouter.init();
-  discordEnt.init();
+  await messageRouter.init();
+  await discordEnt.init();
 };
