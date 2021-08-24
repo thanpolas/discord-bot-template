@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "main": "./app/",
     "description": "Discord bot template --- EDIT ME ---",
+    "database_name": "CHANGE-ME",
     "homepage": "https://github.com/thanpolas/discord-bot-template",
     "bugs": "https://github.com/thanpolas/discord-bot-template/issues",
     "author": {
@@ -18,20 +19,25 @@
     "engines": {
         "node": "16.6.1"
     },
-    "database_name": "CHANGE-ME",
     "scripts": {
         "start": "node .",
         "eslint": "eslint app test",
         "db:reset:local": "node scripts/db-local.script.js",
         "knex:create_migration": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:make",
-        "test:app": "TZ=utc jest --runInBand --testPathPattern=/test/",
+        "jest": "TZ=utc jest --ci --coverage && codecov",
         "knex:migrate": "knex --knexfile ./migrations/knexfile.js --migrations-directory ./migrations/migrations/ migrate:latest",
-        "test": "npm run eslint && npm run test:app"
+        "test": "npm run eslint && npm run jest"
     },
     "jest": {
+        "coverageDirectory": "./coverage/",
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+            "./src/*.js",
+            "./src/**/*.js"
+        ],
         "coverageReporters": [
-            "html",
-            "text-summary"
+            "json",
+            "html"
         ],
         "roots": [
             "./test/app",
@@ -62,6 +68,7 @@
     },
     "devDependencies": {
         "@types/jest": "26.0.23",
+        "codecov": "^3.8.3",
         "eslint": "7.27.0",
         "eslint-config-airbnb-base": "14.2.1",
         "eslint-config-prettier": "8.3.0",
