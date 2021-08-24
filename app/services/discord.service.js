@@ -1,10 +1,10 @@
 /**
  * @fileoverview Service that provides connectivity and authentication to the
- *  discord-commando API.
+ *  discord API.
  */
 
 const config = require('config');
-const { Client } = require('discord.js');
+const { Client, Intents } = require('discord.js');
 
 const log = require('./log.service').get();
 
@@ -54,7 +54,16 @@ discordService.init = async function (bootOpts) {
   return new Promise((resolve, reject) => {
     log.notice('Starting Discord Service...');
 
-    const client = (discordService._client = new Client({ intents: [] }));
+    const client = (discordService._client = new Client({
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.DIRECT_MESSAGES,
+        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+      ],
+      partials: ['CHANNEL'],
+    }));
 
     client.on('ready', () => {
       log.notice(`Discord Connected as: ${client.user.tag}`);
