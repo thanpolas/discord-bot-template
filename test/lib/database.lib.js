@@ -5,10 +5,12 @@
 const knex = require('knex');
 const config = require('config');
 
+const { database_name } = require('../../package.json');
+
 const testDb = (module.exports = {});
 
 /** @const {Array.<string>} ALLOW_NUKE_DB Which database names can be nuked */
-const ALLOW_NUKE_DB = ['EDIT_DB_NAME_IN_test/lib/database.lib.js'];
+const ALLOW_NUKE_DB = [`${database_name}-dev`, `${database_name}-test`];
 
 /**
  * Drop and create test database[s].
@@ -16,9 +18,7 @@ const ALLOW_NUKE_DB = ['EDIT_DB_NAME_IN_test/lib/database.lib.js'];
  * @param {string=} targetDb The target database to nuke and recreate.
  * @return {Promise} A Promise.
  */
-testDb.recreateDatabase = async (
-  targetDb = 'EDIT_DB_NAME_IN_test/lib/database.lib.js',
-) => {
+testDb.recreateDatabase = async (targetDb = `${database_name}-dev`) => {
   try {
     const startTime = Date.now();
 
