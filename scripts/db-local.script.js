@@ -4,6 +4,7 @@
  */
 
 const testDabaseLib = require('../test/lib/database.lib');
+const { database_name } = require('../package.json');
 
 /**
  * Bootstrap of the database operations module.
@@ -11,7 +12,7 @@ const testDabaseLib = require('../test/lib/database.lib');
  */
 const init = async () => {
   try {
-    await testDabaseLib.recreateDatabase('CHANGEME-dev');
+    await testDabaseLib.recreateDatabase(`${database_name}-dev`);
   } catch (ex) {
     console.error('db-local.script.js failed:', ex);
   }
