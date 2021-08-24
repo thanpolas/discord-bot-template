@@ -9,10 +9,7 @@ const {
   getGuildChannel,
   getGuildMemberUid,
 } = require('./logic/guild.ent');
-const {
-  loggerToAdmin,
-  init: initAdminRelay,
-} = require('./logic/relay-to-admin.ent');
+
 const { guildJoined } = require('./logic/guild-join.ent');
 const {
   getMainChannel,
@@ -30,7 +27,6 @@ entity.getMainChannel = getMainChannel;
 entity.getGuild = getGuild;
 entity.getGuildChannel = getGuildChannel;
 entity.getGuildMemberUid = getGuildMemberUid;
-entity.loggerToAdmin = loggerToAdmin;
 entity.sendMessageToChannels = sendMessageToChannels;
 entity.getAddressLink = getAddressLink;
 entity.getTokenLink = getTokenLink;
@@ -42,6 +38,5 @@ entity.removeCommand = removeCommand;
  * @return {Promise<void>} A Promise.
  */
 entity.init = async () => {
-  await initAdminRelay();
   getClient().on('guildCreate', guildJoined);
 };
