@@ -53,12 +53,9 @@ docker-compose up -d
 
 ## Needed Environment Variables
 
-All targets require the following environment variables (add new as needed):
-
--   `DISCORD_BOT_TOKEN` The Discord token of the bot.
-
-This project also supports a [`.env` file][dotenv] which is on `.gitignore`
-for your convenience when developing on your local.
+This project supports [`.env` file][dotenv] which is on `.gitignore`
+for your convenience when developing on your local. Needed environment variables
+can be found on `.env-template` which you should copy to `.env` and edit.
 
 # Development Operations / Maintenance
 
