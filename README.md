@@ -6,12 +6,10 @@
 
 You need to edit the following files:
 
--   [] `.env-template` and copy as `.env`
--   [] `package.json`
--   [] `scripts/db-local.script.js`
--   [] `test/lib/database.lib.js`
--   [] `.circleci/config.yml`
--   [] `config/**` (all configurations).
+-   [ ] `.env-template` and copy as `.env`
+-   [ ] `package.json` - Specifically, define the "database_name" key. This name will be used to create two databases when you run the local db reset npm scripts:"dbname-dev" and "dbname-test".
+-   [ ] `.circleci/config.yml`
+-   [ ] `config/**` (all configurations).
 
 # How To Install
 
