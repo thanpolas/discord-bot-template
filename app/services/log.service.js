@@ -64,7 +64,7 @@ logger.init = function (bootOpts = {}) {
  * @private
  */
 logger._addMiddleware = () => {
-  const { loggerToAdmin } = require('../entities/discord');
+  const { loggerToAdmin } = require('../entities/admin-logs');
 
   // Relay flagged messages to admin channel
   logger.logality.use(loggerToAdmin);
