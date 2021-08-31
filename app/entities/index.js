@@ -16,14 +16,13 @@ const bootstrap = (module.exports = {});
  * @return {Promise} a promise.
  */
 bootstrap.init = async (bootOpts) => {
-  await discordRouter.init();
   if (bootOpts.testing) {
     return;
   }
 
-  await initAdminRelay.init();
-
   await discordEnt.init(bootOpts);
+  await discordRouter.init();
+  await initAdminRelay.init();
 };
 
 /**

@@ -6,6 +6,7 @@ const {
   getClient,
   init: initService,
   dispose: disposeService,
+  isConnected,
 } = require('./discord.service');
 
 const {
@@ -35,6 +36,8 @@ entity.sendMessageToChannels = sendMessageToChannels;
 entity.getAddressLink = getAddressLink;
 entity.getTokenLink = getTokenLink;
 entity.removeCommand = removeCommand;
+entity.isConnected = isConnected;
+entity.getClient = getClient;
 
 /**
  * Execute any available one-off discord tasks...
@@ -44,8 +47,11 @@ entity.removeCommand = removeCommand;
  * @return {Promise<void>} A Promise.
  */
 entity.init = async (bootOpts) => {
+  await initService(bootOpts);
+  if (!isConnected()) {
+    return;
+  }
   getClient().on('guildCreate', guildJoined);
-  initService(bootOpts);
 };
 
 /**

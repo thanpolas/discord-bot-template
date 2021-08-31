@@ -2,7 +2,7 @@
  * @fileoverview Handle discord message commands to the bot.
  */
 
-const { getClient } = require('../discord');
+const { getClient, isConnected } = require('../discord');
 const { handleMemberCommands } = require('./logic/router-member-command.ent');
 const log = require('../../services/log.service').get();
 
@@ -13,6 +13,12 @@ const discordMessageRouter = (module.exports = {});
  *
  */
 discordMessageRouter.init = async () => {
+  if (!isConnected()) {
+    await log.warn(
+      'Discord service not ready, skipping log relay initialization',
+    );
+    return;
+  }
   await log.info('Initializing message router entity...');
   const client = getClient();
 

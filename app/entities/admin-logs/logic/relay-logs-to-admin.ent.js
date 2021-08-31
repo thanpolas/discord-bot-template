@@ -6,13 +6,13 @@
 const config = require('config');
 const format = require('date-fns/format');
 
-const { isConnected } = require('../../discord');
 const globals = require('../../../utils/globals');
-const { getGuildChannel } = require('../../discord');
+const { getGuildChannel, isConnected } = require('../../discord');
 const { formatMessage } = require('./generic-formatting.ent');
 const { handleErrors } = require('./handle-errors.ent');
 const { LogEvents } = require('../../events');
 const { sendLog } = require('./send-message.ent');
+const log = require('../../../services/log.service').get();
 
 const entity = (module.exports = {});
 
@@ -24,6 +24,12 @@ entity._logChannelErrors = null;
 entity._logChannelAlerts = null;
 
 entity.init = async () => {
+  if (!isConnected()) {
+    await log.warn(
+      'Discord service not ready, skipping log relay initialization',
+    );
+    return;
+  }
   entity._logChannelMain = await getGuildChannel(
     config.discord.bot_log_channel_id,
   );
