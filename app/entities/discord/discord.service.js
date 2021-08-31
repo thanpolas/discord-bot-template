@@ -6,7 +6,7 @@
 const config = require('config');
 const { Client, Intents } = require('discord.js');
 
-const log = require('./log.service').get();
+const log = require('../../services/log.service').get();
 
 const discordService = (module.exports = {});
 
@@ -51,7 +51,7 @@ discordService.init = async function (bootOpts) {
   if (bootOpts.testing) {
     return;
   }
-  return new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
     log.notice('Starting Discord Service...');
 
     const client = (discordService._client = new Client({
@@ -85,6 +85,14 @@ discordService.init = async function (bootOpts) {
 
     client.login(config.discord.token);
   });
+
+  promise.catch((ex) => {
+    log.warn(
+      `Discord service not initialized. Will boot without discord Error: ${ex.message}`,
+    );
+  });
+
+  return promise;
 };
 
 /**
