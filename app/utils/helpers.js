@@ -126,13 +126,14 @@ helpers.stdQuote = (str) => {
 
 /**
  * Will index an array of objects into an object using the designated
- * property of the objects as the index pivot.
+ * property of the objects as the index pivot. The created objects will be
+ * arrays of items to contain all records matching that index.
  *
  * @param {Array<Object>} arrayItems The array with objects to index.
  * @param {string} indexCol The column to index by.
- * @return {Object<Array<Object>>} Indexed array as an object.
+ * @return {Object<Array<Object<Array>>>} Indexed array as an object of Arrays.
  */
-helpers.indexArrayToObject = (arrayItems, indexCol) => {
+helpers.indexArrayToObjectAr = (arrayItems, indexCol) => {
   const indexed = {};
 
   arrayItems.forEach((arrayItem) => {
@@ -142,6 +143,25 @@ helpers.indexArrayToObject = (arrayItems, indexCol) => {
     } else {
       indexed[itemId] = [arrayItem];
     }
+  });
+  return indexed;
+};
+
+/**
+ * Will index an array of objects into an object using the designated
+ * property of the objects as the index pivot. The created objects will be
+ * objects, overwritting any duplicate indexed items.
+ *
+ * @param {Array<Object>} arrayItems The array with objects to index.
+ * @param {string} indexCol The column to index by.
+ * @return {Object<Array<Object>>} Indexed array as an object of Arrays.
+ */
+helpers.indexArrayToObject = (arrayItems, indexCol) => {
+  const indexed = {};
+
+  arrayItems.forEach((arrayItem) => {
+    const itemId = arrayItem[indexCol];
+    indexed[itemId] = arrayItem;
   });
   return indexed;
 };
@@ -227,65 +247,22 @@ helpers.flatFilter = (ar) => {
 };
 
 /**
- * Convert divergence value to human readable format.
+ * Helper for performance measuring of execution time.
  *
- * @param {number} divergence A divergence float.
- * @return {string} Human readable percentage.
- */
-helpers.divergenceHr = (divergence) => {
-  return `${(divergence * 100).toFixed(2)}%`;
-};
-
-/**
- * Converts an array of strings into numbers.
+ * Invoke without argument to get the starting timestamp.
+ * Invoke with argument the starting timestamp and get a human readable perf
+ * measurement.
  *
- * @param {Array<string>} arr The array.
- * @return {Array<number>}
+ * @param {Array<number>=} optSince tuple return value of hrtime().
+ * @return {Array<number>|string} If argument is defined string, otherwise
+ *    process.hrtime() return value.
  */
-helpers.arrToNumbers = (arr) => arr.map((item) => Number(item));
-
-/**
- * Calculates the mean value.
- *
- * @param {Array<number>} arr The array to get the mean of.
- * @return {number} The mean value.
- */
-helpers.meanOfArr = (arr) => {
-  const total = arr.reduce((aggregate, val) => {
-    return aggregate + val;
-  }, 0);
-
-  return total / arr.length;
-};
-
-/**
- * Calculates the median of an array.
- *
- * @param {Array<number>} arr The numbers to get the median from.
- * @return {number}
- */
-helpers.medianOfArr = (arr) => {
-  const arrSorted = arr.sort((a, b) => {
-    return a - b;
-  });
-
-  const { length } = arrSorted;
-
-  if (length % 2 === 1) {
-    // If length is odd
-    return arrSorted[length / 2 - 0.5];
+helpers.perf = (optSince) => {
+  if (!optSince) {
+    return process.hrtime();
   }
 
-  return (arrSorted[length / 2] + arrSorted[length / 2 - 1]) / 2;
-};
-
-/**
- * Get the divergence between two numbered expressed in percentage as a float.
- *
- * @param {number} a Numerator.
- * @param {number} b Denominator
- * @return {number} 0.01 = 1%.
- */
-helpers.getDivergence = (a, b) => {
-  return a / b - 1;
+  const [seconds, ns] = process.hrtime(optSince);
+  const ms = Number.parseInt(ns / 1000000, 10);
+  return `${seconds}" ${ms}ms`;
 };
