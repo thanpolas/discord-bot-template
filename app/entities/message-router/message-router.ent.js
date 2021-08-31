@@ -1,22 +1,22 @@
 /**
- * @fileoverview Handle message commands to the bot.
+ * @fileoverview Handle discord message commands to the bot.
  */
 
-const { getClient } = require('../../services/discord.service');
+const { getClient } = require('../discord');
 const { handleMemberCommands } = require('./logic/router-member-command.ent');
 const log = require('../../services/log.service').get();
 
-const messageRouter = (module.exports = {});
+const discordMessageRouter = (module.exports = {});
 
 /**
  * Initialize Discord event listeners for performing message router.
  *
  */
-messageRouter.init = async () => {
+discordMessageRouter.init = async () => {
   await log.info('Initializing message router entity...');
   const client = getClient();
 
-  client.on('message', messageRouter._onMessage);
+  client.on('message', discordMessageRouter._onMessage);
 };
 
 /**
@@ -25,7 +25,7 @@ messageRouter.init = async () => {
  * @param {DiscordMessage} message Discord Message Object.
  * @private
  */
-messageRouter._onMessage = async (message) => {
+discordMessageRouter._onMessage = async (message) => {
   // only care for private messages. (public are  type === "text").
   if (message.channel.type !== 'dm') {
     return;

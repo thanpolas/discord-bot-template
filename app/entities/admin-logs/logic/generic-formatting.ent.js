@@ -2,7 +2,7 @@
  * @fileoverview Generic (legacy) formatting of log messages for discord.
  */
 
-const { getClient } = require('../../../services/discord.service');
+const { getClient } = require('../../discord');
 
 const entity = (module.exports = {});
 

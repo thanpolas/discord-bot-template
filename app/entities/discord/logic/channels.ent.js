@@ -3,7 +3,7 @@
  */
 
 const config = require('config');
-const { getClient } = require('../../../services/discord.service');
+const { getClient } = require('../discord.service');
 const { getGuildChannel } = require('./guild.ent');
 const { asyncMapCap } = require('../../../utils/helpers');
 

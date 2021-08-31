@@ -2,7 +2,7 @@
  * @fileoverview Guild related methods.
  */
 
-const { getClient } = require('../../../services/discord.service');
+const { getClient } = require('../discord.service');
 
 const entity = (module.exports = {});
 
