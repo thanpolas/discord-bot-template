@@ -3,7 +3,7 @@
  */
 
 const discordEnt = require('./discord');
-const messageRouter = require('./message-router');
+const discordRouter = require('./discord-router');
 const { init: initAdminRelay } = require('./admin-logs');
 
 const bootstrap = (module.exports = {});
@@ -16,7 +16,7 @@ const bootstrap = (module.exports = {});
  * @return {Promise} a promise.
  */
 bootstrap.init = async (bootOpts) => {
-  await messageRouter.init();
+  await discordRouter.init();
   if (bootOpts.testing) {
     return;
   }
