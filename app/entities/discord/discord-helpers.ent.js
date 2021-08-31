@@ -2,7 +2,7 @@
  * @fileoverview Various discord helpers, queries and methods.
  */
 
-const { getClient } = require('../../services/discord.service');
+const { getClient, init: initService } = require('./discord.service');
 
 const {
   getGuild,
@@ -35,8 +35,11 @@ entity.removeCommand = removeCommand;
 /**
  * Execute any available one-off discord tasks...
  *
+ * @param {Object} bootOpts Application boot options.
+ * @param {boolean} bootOpts.testing When true go into testing mode.
  * @return {Promise<void>} A Promise.
  */
-entity.init = async () => {
+entity.init = async (bootOpts) => {
   getClient().on('guildCreate', guildJoined);
+  initService(bootOpts);
 };

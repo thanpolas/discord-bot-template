@@ -23,5 +23,5 @@ bootstrap.init = async (bootOpts) => {
 
   await initAdminRelay.init();
 
-  await discordEnt.init();
+  await discordEnt.init(bootOpts);
 };
