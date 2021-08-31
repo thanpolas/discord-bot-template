@@ -6,7 +6,7 @@
 const config = require('config');
 const { Client, Intents } = require('discord.js');
 
-const log = require('./log.service').get();
+const log = require('../../services/log.service').get();
 
 const discordService = (module.exports = {});
 
@@ -51,20 +51,21 @@ discordService.init = async function (bootOpts) {
   if (bootOpts.testing) {
     return;
   }
-  return new Promise((resolve, reject) => {
-    log.notice('Starting Discord Service...');
 
-    const client = (discordService._client = new Client({
-      intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-      ],
-      partials: ['CHANNEL'],
-    }));
+  log.notice('Starting Discord Service...');
 
+  const client = (discordService._client = new Client({
+    intents: [
+      Intents.FLAGS.GUILDS,
+      Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+      Intents.FLAGS.GUILD_MESSAGES,
+      Intents.FLAGS.DIRECT_MESSAGES,
+      Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    ],
+    partials: ['CHANNEL'],
+  }));
+
+  const promise = new Promise((resolve, reject) => {
     client.on('ready', () => {
       log.notice(`Discord Connected as: ${client.user.tag}`);
 
@@ -82,9 +83,23 @@ discordService.init = async function (bootOpts) {
         reject();
       }
     });
-
-    client.login(config.discord.token);
   });
+
+  promise.catch(async (ex) => {
+    await log.warn(
+      `Discord service not initialized. Will boot without discord Error: ${ex.message}`,
+    );
+  });
+
+  try {
+    await client.login(config.discord.token);
+  } catch (ex) {
+    await log.warn(
+      `Discord login failed, proceeding with boot. Error: ${ex.message}`,
+    );
+  }
+
+  return promise;
 };
 
 /**

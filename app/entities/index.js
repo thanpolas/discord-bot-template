@@ -3,7 +3,7 @@
  */
 
 const discordEnt = require('./discord');
-const messageRouter = require('./message-router');
+const discordRouter = require('./discord-router');
 const { init: initAdminRelay } = require('./admin-logs');
 
 const bootstrap = (module.exports = {});
@@ -16,12 +16,20 @@ const bootstrap = (module.exports = {});
  * @return {Promise} a promise.
  */
 bootstrap.init = async (bootOpts) => {
-  await messageRouter.init();
   if (bootOpts.testing) {
     return;
   }
 
+  await discordEnt.init(bootOpts);
+  await discordRouter.init();
   await initAdminRelay.init();
+};
 
-  await discordEnt.init();
+/**
+ * Dispose of all needed services for a gracefull shutdown.
+ *
+ * @return {Promise<void>}
+ */
+bootstrap.dispose = async () => {
+  discordEnt.dispose();
 };
