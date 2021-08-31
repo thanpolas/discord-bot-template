@@ -25,3 +25,12 @@ bootstrap.init = async (bootOpts) => {
 
   await discordEnt.init(bootOpts);
 };
+
+/**
+ * Dispose of all needed services for a gracefull shutdown.
+ *
+ * @return {Promise<void>}
+ */
+bootstrap.dispose = async () => {
+  discordEnt.dispose();
+};

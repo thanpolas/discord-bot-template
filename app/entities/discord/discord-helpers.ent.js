@@ -2,7 +2,11 @@
  * @fileoverview Various discord helpers, queries and methods.
  */
 
-const { getClient, init: initService } = require('./discord.service');
+const {
+  getClient,
+  init: initService,
+  dispose: disposeService,
+} = require('./discord.service');
 
 const {
   getGuild,
@@ -42,4 +46,13 @@ entity.removeCommand = removeCommand;
 entity.init = async (bootOpts) => {
   getClient().on('guildCreate', guildJoined);
   initService(bootOpts);
+};
+
+/**
+ * Dispose of all needed services for a gracefull shutdown.
+ *
+ * @return {Promise<void>}
+ */
+entity.dispose = async () => {
+  await disposeService();
 };

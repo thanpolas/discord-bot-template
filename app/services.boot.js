@@ -51,7 +51,7 @@ appServices.boot = async (bootOpts) => {
  */
 appServices.dispose = async () => {
   await postgresService.dispose();
-  await discordService.dispose();
+  await entities.dispose();
   if (globals.isProd) {
     await cronService.dispose();
   }
