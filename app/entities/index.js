@@ -22,7 +22,7 @@ bootstrap.init = async (bootOpts) => {
 
   await discordEnt.init(bootOpts);
   await discordRouter.init();
-  await initAdminRelay.init();
+  await initAdminRelay(bootOpts);
 };
 
 /**

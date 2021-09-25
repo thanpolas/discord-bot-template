@@ -52,7 +52,12 @@ discordService.init = async function (bootOpts) {
     return;
   }
 
-  log.notice('Starting Discord Service...');
+  if (config.discord.token.indexOf('DO NOT SET') !== -1) {
+    await log.warn('Discord token not set. Will boot without discord');
+    return;
+  }
+
+  await log.notice('Starting Discord Service...');
 
   const client = (discordService._client = new Client({
     intents: [
@@ -86,17 +91,13 @@ discordService.init = async function (bootOpts) {
   });
 
   promise.catch(async (ex) => {
-    await log.warn(
-      `Discord service not initialized. Will boot without discord Error: ${ex.message}`,
-    );
+    await log.warn(`Discord service not initialized. Error: ${ex.message}`);
   });
 
   try {
     await client.login(config.discord.token);
   } catch (ex) {
-    await log.warn(
-      `Discord login failed, proceeding with boot. Error: ${ex.message}`,
-    );
+    await log.warn(`Discord login failed Error: ${ex.message}`);
   }
 
   return promise;
